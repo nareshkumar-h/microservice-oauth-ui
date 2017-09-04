@@ -1,0 +1,129 @@
+<html ng-app="myApp">
+<head>
+<title>Test Oauth2 </title>
+<script src="js/angular.min.js"> </script>
+<script>
+var myApp = angular.module("myApp",[]);
+myApp.controller("MainController" , function($rootScope, $scope , $http,  $httpParamSerializer) {
+
+
+	var rootUrl = "http://localhost:9000/";
+
+	var loggedInUser = localStorage.getItem("LOGGED_IN_USER");
+
+	if ( $rootScope.LOGGED_IN_USER  ){
+
+	}
+	else if (loggedInUser)
+	{
+		
+		$rootScope.LOGGED_IN_USER= JSON.parse(loggedInUser);
+	}
+	else
+	{
+		$rootScope.LOGGED_IN_USER = null;
+	}
+
+
+	$scope.login =  function(){
+
+		//Get Access Token
+		var credentials = {
+						"username"  : $scope.username,
+						"password"  : $scope.password,
+						"grant_type":"password"
+						};		
+		
+		$scope.fetchToken(credentials);
+		
+
+	}
+
+	$scope.fetchToken = function (formData) {
+
+		var bearerToken = btoa("c1:s1"); //clientid:clientsecret		
+		console.log("bearerToken:" + bearerToken );
+		
+		var req  = {
+			method :'POST',
+			url:rootUrl + "auth/oauth/token",
+			headers: {
+				"Authorization" : "Basic " + bearerToken,
+				"Content-type"  : "application/x-www-form-urlencoded; charset=utf-8"
+				
+			},
+			data : $httpParamSerializer(formData)
+		};
+		console.log(JSON.stringify(req));
+		
+		$http(req).then (function(response) {
+			
+			$scope.invalid_login = false;
+			var data = { "access_token" : response.data.access_token };
+			localStorage.setItem("LOGGED_IN_USER", JSON.stringify(data));
+			$rootScope.LOGGED_IN_USER = data;
+			console.log(JSON.stringify(response.data));		
+
+
+
+		}).catch(function(data){
+			console.log("Invalid Login:" + JSON.stringify(data));
+			$scope.invalid_login=true;	
+		});
+	}
+
+	$scope.logout = function(){
+
+		$rootScope.LOGGED_IN_USER = null;
+		localStorage.clear();
+
+	}
+
+});
+
+myApp.controller("UserController" , function($rootScope, $scope , $http,  $httpParamSerializer) {
+
+	var rootUrl = "http://localhost:9001/";
+
+	$scope.init = function(){
+		if ($rootScope.LOGGED_IN_USER){
+			$scope.getUsers();
+		}
+		
+	}
+	
+	$scope.getUsers = function(){
+			$http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.LOGGED_IN_USER.access_token;	
+			
+			$http.get(rootUrl + "users" ).then ( function(response) {
+				alert(JSON.stringify(response));
+				console.log(JSON.stringify(response));
+				$scope.users = response.data;
+			});
+	}
+
+});
+
+</script>
+</head>
+<body ng-controller="MainController">
+
+<div ng-show="!LOGGED_IN_USER"> 
+	<h3> Login Page </h3>
+	<span ng-show="invalid_login"> Invalid Login Credentials </span>
+	<form ng-submit="login()" method="post">
+	Username : <input type="text" name="username" ng-model="username" required autofocus value="guest" /> <br/>
+	Password: <input type="password" name="password" ng-model="password" required value="guest123" /> <br/>
+	<button type="submit">Submit </button>
+	</form>
+</div>
+<div ng-show="LOGGED_IN_USER" ng-controller="UserController" ng-init="init()"> 
+
+	Welcome ( <a href="" ng-click="logout()">Logout</a> ) <br/>
+
+	Token {{LOGGED_IN_USER.access_token}} </br>
+<h3> Show Users </h3>
+{{users}}
+</div>
+</body>
+</html>
