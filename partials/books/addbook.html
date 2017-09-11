@@ -1,0 +1,22 @@
+<div ng-controller="BookController"> 
+    <h3>Add Book</h3>
+    <form ng-submit="addBook()" >
+        <div class="form-group row">
+            <label for="title" class="col-2 col-form-label">Title</label>
+            <div class="col-5">
+              <input class="form-control" type="text" id="title" ng-model="book.title" required autofocus />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="price" class="col-2 col-form-label">Price</label>
+            <div class="col-5">
+              <input class="form-control" type="number" id="price" min="1" ng-model="book.price" required />
+            </div>
+          </div>
+          <div class="form-group row">            
+            <div class="col-5">
+              <input class="form-control-lg btn btn-primary" type="submit" value="Submit" >
+            </div>
+          </div>
+    </form>
+</div>

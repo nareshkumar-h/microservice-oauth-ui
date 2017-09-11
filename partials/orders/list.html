@@ -1,0 +1,18 @@
+<div ng-controller="OrderController" ng-init="getOrders()"> 
+	<h3>List Orders </h3>
+    <table class="table table-bordered">
+        <thead><tr> <th>Sno </th> <th> Username </th> <th>Book Name </th> <th> Price </th> <th> Quantity </th> 
+            <th> Total Amount </th> <th> Ordered Date </th><th>Status</th></tr> </thead>
+        <tbody>
+            <tr ng-repeat="o in orders">
+                <td> {{$index+1}} </td>
+                <td>{{o.userName}} </td>
+                <td>{{o.bookTitle}} </td>
+                <td>{{o.bookPrice}} </td>
+                <td>{{o.quantity}} </td>
+                <td>{{o.totalAmount}} </td>
+                <td>{{o.orderedDate}} </td>
+                <td>{{o.status}} </td>
+            </tr>                
+    </table>
+</div>

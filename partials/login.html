@@ -1,0 +1,9 @@
+<div ng-show="!LOGGED_IN_USER">
+    <h3> Login Page </h3>
+    <span ng-show="invalid_login"> Invalid Login Credentials </span>
+    <form ng-submit="login()" method="post">
+        Username : <input type="text" name="username" ng-model="username" required autofocus value="guest" /> <br/> Password:
+        <input type="password" name="password" ng-model="password" required value="guest123" /> <br/>
+        <button type="submit">Submit </button>
+    </form>
+</div>

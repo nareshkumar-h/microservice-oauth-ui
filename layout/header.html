@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Online BookApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+     aria-expanded="false" aria-label="Toggle navigation">	
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>	
+            <li class="nav-item dropdown" ng-show="LOGGED_IN_USER">
+                    <a class="nav-link dropdown-toggle" href="#users" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                     aria-expanded="false">Users</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#users">List Users</a>
+                        <a class="dropdown-item" href="#adduser">Add User</a>
+                        <!-- <a class="dropdown-item" href="#myprofile">My Profile</a> -->
+                    </div>
+                </li>			
+            <li class="nav-item dropdown" ng-show="LOGGED_IN_USER">
+                <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                 aria-expanded="false">Books</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#books">List Books</a>
+                    <a ng-show="LOGGED_IN_USER" class="dropdown-item" href="#addbook">Add Book</a>						
+                </div>
+            </li>
+            <li class="nav-item dropdown" ng-show="LOGGED_IN_USER">
+                <a class="nav-link dropdown-toggle" href="#orders" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                 aria-expanded="false">Orders</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#orders">List Orders</a>
+                    <a ng-show="LOGGED_IN_USER" class="dropdown-item" href="#myorders">My Orders</a>						
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li ng-show="LOGGED_IN_USER">
+                <a class="nav-link" href=""> 
+                     Welcome {{currentuser.username}} - ( {{currentuser.authorities[0].authority}} ) 
+                     <!-- -->
+                </a>
+            </li>
+            <li ng-show="LOGGED_IN_USER">
+                <a class="nav-link" href="" ng-click="logout()">Logout</a> 
+            </li>
+            <li ng-show="!LOGGED_IN_USER">
+                <a class="nav-link" href="#"> Login </a>
+            </li>
+            <li class="nav-item" ng-show="LOGGED_IN_USER.access_token">
+                    <a class="nav-link" href="">Token {{LOGGED_IN_USER.access_token}} </span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,13 @@
+<div ng-controller="BookController" ng-init="getBooks()"> 
+	<h3>List Books </h3>
+    <table class="table table-bordered">
+        <thead><tr> <th>Sno </th> <th> Name </th> <th> Price</th> <th>Created Date </td> </tr> </thead>
+        <tbody>
+            <tr ng-repeat="b in books">
+                <td> {{$index+1}} </td>
+                <td>{{b.title}} </td>
+                <td>{{b.price}} </td>
+                <td>{{b.createdDate}} </td>
+            </tr>                
+    </table>
+</div>

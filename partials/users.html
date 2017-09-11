@@ -1,0 +1,15 @@
+<div ng-controller="UserController" ng-init="init()">
+          
+    <h3> List Users </h3>
+    
+    <table class="table table-bordered">
+        <thead><tr> <th>Sno </th> <th> Name </th> <th> Username </th> <th> Roles </th> </tr> </thead>
+        <tbody>
+            <tr ng-repeat="u in users">
+                <td> {{$index+1}} </td>
+                <td>{{u.name}} </td>
+                <td>{{u.username}} </td>
+                <td>{{u.roles}} </td>
+            </tr>                
+    </table>
+</div>
